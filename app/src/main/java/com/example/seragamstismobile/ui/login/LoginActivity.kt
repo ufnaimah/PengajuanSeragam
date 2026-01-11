@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        // Cek jika sudah login, langsung ke Home
         if (sessionManager.fetchAuthToken() != null) {
             moveToHome()
         }
@@ -35,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.tvRegister.setOnClickListener {
-            // Navigasi ke RegisterActivity
             startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
@@ -49,17 +47,17 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        // Tampilkan loading (opsional jika ada ProgressBar di XML)
         binding.progressBar.visibility = View.VISIBLE
 
         lifecycleScope.launch {
             try {
-                // Gunakan ApiClient.instance sesuai file ApiClient.kt kamu
-                val response = ApiClient.instance.login(LoginRequest(username, password))
+                // PERBAIKAN: Gunakan 'getApiService(this)' bukan 'instance'
+                // Karena ApiClient baru butuh context 'this' untuk mengecek session token (meski saat login belum ada)
+                val response = ApiClient.getApiService(this@LoginActivity).login(LoginRequest(username, password))
 
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    if (loginResponse?.token != null) {
+                    if (loginResponse != null) {
                         sessionManager.saveToken(loginResponse.token)
                         Toast.makeText(this@LoginActivity, "Selamat Datang, ${loginResponse.username}", Toast.LENGTH_SHORT).show()
                         moveToHome()

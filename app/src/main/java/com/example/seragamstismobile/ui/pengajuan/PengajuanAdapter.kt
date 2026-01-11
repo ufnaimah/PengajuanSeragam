@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seragamstismobile.databinding.ItemPengajuanBinding
 import com.example.seragamstismobile.model.PengajuanResponse
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class PengajuanAdapter(private val list: List<PengajuanResponse>) :
     RecyclerView.Adapter<PengajuanAdapter.ViewHolder>() {
@@ -19,17 +17,22 @@ class PengajuanAdapter(private val list: List<PengajuanResponse>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = list[position]
-        holder.binding.apply {
-            tvTipeSeragam.text = "Tipe: ${data.tipeSeragam}"
-            tvStatus.text = data.status
-            tvUkuran.text = "Baju: ${data.ukuranBaju} | Celana: ${data.ukuranCelanaAtauRok}"
+        val item = list[position]
 
-            // Format Tanggal sesuai response dari backend
-            val format = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            tvTanggal.text = "Diajukan pada: ${format.format(data.tanggalPengajuan)}"
+        holder.binding.apply {
+            tvTipe.text = "Seragam: ${item.tipeSeragam ?: "-"}"
+            tvStatus.text = item.status ?: "MENUNGGU"
+
+            val detail = StringBuilder()
+            detail.append("Baju: ${item.ukuranBaju ?: "-"}")
+            detail.append(", Celana/Rok: ${item.ukuranCelanaAtauRok ?: "-"}")
+
+            if (!item.ukuranKerudung.isNullOrEmpty()) {
+                detail.append(", Kerudung: ${item.ukuranKerudung}")
+            }
+            tvDetail.text = detail.toString()
         }
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount() = list.size
 }

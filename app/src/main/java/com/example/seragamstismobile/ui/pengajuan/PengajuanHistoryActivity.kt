@@ -18,32 +18,33 @@ class PengajuanHistoryActivity : AppCompatActivity() {
         binding = ActivityPengajuanHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup RecyclerView
+        // PENTING: Set Layout Manager (Tanpa ini list tidak akan muncul)
         binding.rvHistory.layoutManager = LinearLayoutManager(this)
 
-        loadHistory()
+        loadData()
     }
 
-    private fun loadHistory() {
+    private fun loadData() {
         binding.progressBar.visibility = View.VISIBLE
-
         lifecycleScope.launch {
             try {
-                // Panggil endpoint /api/pengajuan/saya
+                // Panggil API dengan context 'this' agar Token Login terbawa
                 val response = ApiClient.getApiService(this@PengajuanHistoryActivity).getMyPengajuan()
 
                 if (response.isSuccessful) {
-                    val historyList = response.body() ?: emptyList()
-                    if (historyList.isEmpty()) {
+                    val list = response.body() ?: emptyList()
+
+                    if (list.isEmpty()) {
                         Toast.makeText(this@PengajuanHistoryActivity, "Belum ada riwayat pengajuan", Toast.LENGTH_SHORT).show()
                     }
-                    // Pasang data ke Adapter
-                    binding.rvHistory.adapter = PengajuanAdapter(historyList)
+
+                    // Pasang Adapter
+                    binding.rvHistory.adapter = PengajuanAdapter(list)
                 } else {
-                    Toast.makeText(this@PengajuanHistoryActivity, "Gagal mengambil riwayat: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PengajuanHistoryActivity, "Gagal memuat data", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@PengajuanHistoryActivity, "Koneksi Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PengajuanHistoryActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
                 binding.progressBar.visibility = View.GONE
             }

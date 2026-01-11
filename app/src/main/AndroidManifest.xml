@@ -27,5 +27,7 @@
         <activity android:name=".ui.home.HomeActivity" android:exported="false" />
         <activity android:name=".ui.pengajuan.PengajuanActivity" android:exported="false" />
 
+        <activity android:name=".ui.pengajuan.PengajuanHistoryActivity" />
+
     </application>
 </manifest>
