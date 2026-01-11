@@ -1,37 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp">
 
     <TextView
-        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pengajuan Seragam"
-        android:textSize="20sp"
+        android:text="Form Pengajuan Seragam"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerTipeSeragam"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/tipe_seragam"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/etUkuranBaju"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ukuran Baju (S / M / L / XL)"
         android:layout_marginBottom="24dp"/>
 
-    <Button
-        android:id="@+id/btnKirim"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kirim Pengajuan"/>
+        android:hint="Tipe Seragam">
+        <AutoCompleteTextView
+            android:id="@+id/actvTipeSeragam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Ukuran Baju">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etUkuranBaju"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Ukuran Celana / Rok">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etUkuranCelana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Ukuran Kerudung (Opsional)">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etUkuranKerudung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnKirimPengajuan"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:text="KIRIM PENGAJUAN"
+        app:cornerRadius="12dp" />
 
 </LinearLayout>

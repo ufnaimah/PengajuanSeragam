@@ -30,23 +30,28 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performRegister() {
+        // Ambil data dari input
+        // Pastikan ID di XML kamu adalah etNim (sesuai file yang kamu kirim)
         val username = binding.etUsername.text.toString().trim()
         val name = binding.etName.text.toString().trim()
         val nim = binding.etNim.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
         val gender = binding.actvGender.text.toString().trim()
+
+        // Ambil nilai Switch (Pastikan ID XML switchHijab sudah benar)
         val isHijab = binding.switchHijab.isChecked
 
-        // Validasi input
+        // Validasi input kosong
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || nim.isEmpty() || gender.isEmpty()) {
             Toast.makeText(this, "Mohon isi semua data", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // Kirim ke Backend
         val request = RegisterRequest(
             username = username,
             password = password,
-            namaLengakap = name, // Pastikan sesuai field di JSON
+            namaLengkap = name, // PERBAIKAN: Harus 'namaLengkap' sesuai Model
             nim = nim,
             gender = gender,
             isHijab = isHijab

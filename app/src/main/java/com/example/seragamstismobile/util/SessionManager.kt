@@ -11,13 +11,12 @@ class SessionManager(context: Context) {
         prefs.edit().putString("jwt_token", token).apply()
     }
 
-    // Gunakan nama ini agar konsisten dengan kode Activity
     fun fetchAuthToken(): String? = prefs.getString("jwt_token", null)
 
-    // Tetap simpan getToken agar tidak merusak kode lain jika ada
     fun getToken(): String? = fetchAuthToken()
 
-    fun clear() {
+    // Kita pakai nama clearSession() biar konsisten
+    fun clearSession() {
         prefs.edit().clear().apply()
     }
 }

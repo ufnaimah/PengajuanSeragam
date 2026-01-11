@@ -3,8 +3,8 @@ package com.example.seragamstismobile.model
 data class RegisterRequest(
     val username: String,
     val password: String,
-    val namaLengakap: String, // Mengikuti JSON backend
+    val namaLengkap: String, // Perbaikan typo dari 'namaLengakap'
     val nim: String,
-    val gender: String, // "LAKI_LAKI" atau "PEREMPUAN"
-    val isHijab: Boolean // true atau false
+    val gender: String,
+    val isHijab: Boolean // Ganti 'hijab' jadi 'isHijab' agar sesuai Activity
 )

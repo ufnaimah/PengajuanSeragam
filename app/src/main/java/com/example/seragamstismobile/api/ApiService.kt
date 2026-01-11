@@ -5,23 +5,40 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
-    // Sesuai dengan AuthController: /api/auth/signin
-    @POST("api/auth/signin")
+    // 1. Authentication
+    @POST("api/auth/register")
+    suspend fun register(@Body request: RegisterRequest): Response<Any>
+
+    @POST("api/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    // Sesuai dengan AuthController: /api/auth/signup
-    @POST("api/auth/signup")
-    suspend fun register(@Body request: RegisterRequest): Response<MessageResponse>
-
-    // Sesuai dengan UserController: /api/users/profile
+    // 2. User Management (Butuh Token)
     @GET("api/users/profile")
     suspend fun getProfile(): Response<UserResponse>
 
-    // Sesuai dengan UserController: /api/users/profile (Method PUT)
     @PUT("api/users/profile")
-    suspend fun updateProfile(@Body request: UserResponse): Response<UserResponse>
+    suspend fun updateProfile(@Body request: UpdateProfileRequest): Response<Any>
 
-    // Sesuai dengan PengajuanController: /api/pengajuan/saya
+    @PUT("api/users/change-password")
+    suspend fun changePassword(@Body request: ChangePasswordRequest): Response<Any>
+
+    @DELETE("api/users/account")
+    suspend fun deleteAccount(): Response<Any>
+
+    // 3. Business Process (Pengajuan - Mahasiswa)
+    @POST("api/pengajuan")
+    suspend fun createPengajuan(@Body request: PengajuanRequest): Response<Any>
+
     @GET("api/pengajuan/saya")
-    suspend fun getMyPengajuan(): Response<List<Pengajuan>>
+    suspend fun getMyPengajuan(): Response<List<PengajuanResponse>>
+
+    // 4. Business Process (Pengajuan - Admin)
+    @GET("api/pengajuan/admin/all")
+    suspend fun getAllPengajuan(): Response<List<PengajuanResponse>>
+
+    @PUT("api/pengajuan/admin/{id}/status")
+    suspend fun updateStatus(
+        @Path("id") id: Long,
+        @Body request: UpdateStatusRequest
+    ): Response<Any>
 }

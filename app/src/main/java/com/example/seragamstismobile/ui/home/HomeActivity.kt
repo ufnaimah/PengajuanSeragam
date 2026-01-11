@@ -18,8 +18,12 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogout.setOnClickListener {
-            SessionManager(this).clear()
-            startActivity(Intent(this, LoginActivity::class.java))
+            // Ganti jadi clearSession()
+            SessionManager(this).clearSession()
+            val intent = Intent(this, LoginActivity::class.java)
+            // Tambahkan flag agar tidak bisa back ke Home setelah logout
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             finish()
         }
     }
