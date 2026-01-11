@@ -28,14 +28,17 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     val response = ApiClient.getApiService(this@LoginActivity).login(LoginRequest(username, password))
                     if (response.isSuccessful) {
-                        response.body()?.token?.let { SessionManager(this@LoginActivity).saveToken(it) }
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                        finish()
+                        val token = response.body()?.token
+                        if (token != null) {
+                            SessionManager(this@LoginActivity).saveToken(token)
+                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            finish()
+                        }
                     } else {
-                        Toast.makeText(this@LoginActivity, "Login Gagal!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "Login Gagal! Cek kredensial.", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(this@LoginActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Error Koneksi: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }

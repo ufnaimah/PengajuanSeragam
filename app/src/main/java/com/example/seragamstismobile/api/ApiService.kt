@@ -10,7 +10,4 @@ interface ApiService {
 
     @GET("api/pengajuan/saya")
     suspend fun getMyPengajuan(): Response<List<Pengajuan>>
-
-    @POST("api/pengajuan")
-    suspend fun createPengajuan(@Body req: Any): Response<Any>
 }

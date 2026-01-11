@@ -12,10 +12,11 @@ object ApiClient {
     fun getApiService(context: Context): ApiService {
         val client = OkHttpClient.Builder().addInterceptor { chain ->
             val token = SessionManager(context).getToken()
-            val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer $token")
-                .build()
-            chain.proceed(newRequest)
+            val requestBuilder = chain.request().newBuilder()
+            if (token != null) {
+                requestBuilder.addHeader("Authorization", "Bearer $token")
+            }
+            chain.proceed(requestBuilder.build())
         }.build()
 
         return Retrofit.Builder()

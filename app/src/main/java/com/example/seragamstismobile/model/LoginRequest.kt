@@ -1,6 +1,5 @@
 package com.example.seragamstismobile.model
-
-class LoginRequest {
+data class LoginRequest(
     val username: String,
     val password: String
-}
+)
