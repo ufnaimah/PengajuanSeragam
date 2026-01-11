@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("SeragamPrefs", Context.MODE_PRIVATE)
+
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("SeragamPrefs", Context.MODE_PRIVATE)
 
     fun saveToken(token: String) {
         prefs.edit().putString("jwt_token", token).apply()

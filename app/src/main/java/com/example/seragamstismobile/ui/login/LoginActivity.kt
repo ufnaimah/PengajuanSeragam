@@ -13,10 +13,12 @@ import com.example.seragamstismobile.util.SessionManager
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -25,20 +27,17 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etPassword.text.toString()
 
             lifecycleScope.launch {
-                try {
-                    val response = ApiClient.getApiService(this@LoginActivity).login(LoginRequest(username, password))
-                    if (response.isSuccessful) {
-                        val token = response.body()?.token
-                        if (token != null) {
-                            SessionManager(this@LoginActivity).saveToken(token)
-                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                            finish()
-                        }
-                    } else {
-                        Toast.makeText(this@LoginActivity, "Login Gagal! Cek kredensial.", Toast.LENGTH_SHORT).show()
+                val response = ApiClient.getApiService(this@LoginActivity)
+                    .login(LoginRequest(username, password))
+
+                if (response.isSuccessful) {
+                    response.body()?.token?.let {
+                        SessionManager(this@LoginActivity).saveToken(it)
+                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                        finish()
                     }
-                } catch (e: Exception) {
-                    Toast.makeText(this@LoginActivity, "Error Koneksi: ${e.message}", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@LoginActivity, "Login gagal", Toast.LENGTH_SHORT).show()
                 }
             }
         }

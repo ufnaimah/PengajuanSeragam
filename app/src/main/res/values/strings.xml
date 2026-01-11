@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Seragam STIS Mobile</string>
+    <string-array name="tipe_seragam">
+        <item>PDA</item>
+        <item>PDO</item>
+    </string-array>
+
 </resources>
